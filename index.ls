@@ -5,9 +5,11 @@ requireDir = (loc, ignore, trail=[], cb) ->
   ret = {}
   (fs.readdirSync loc).forEach (file) ->
     stats = fs.lstatSync nextLoc = loc + "/" + file
+    
     if stats.isDirectory() then ret[file] = requireDir nextLoc, ignore, trail.concat(file), cb
     else
       switch typeof! ignore
+      
         | "String" =>
           if nextLoc is ignore then return
 
@@ -22,7 +24,7 @@ requireDir = (loc, ignore, trail=[], cb) ->
 
         name = path.basename nextLoc, path.extname nextLoc, ignore, cb
         
-        val = require(nextLoc)
+        val = require nextLoc
         if cb then val = cb val, trail.concat name
 
         ret[ name ] = val
