@@ -33,7 +33,8 @@ requireDir = (loc, ignore, trail=[], cb) ->
         
   ret
   
-module.exports = (root, ignore, cb) ->
+module.exports = (root, opts={}, cb) ->
+  { ignore } = opts
   if not root then root = path.dirname require.main.filename
   if not path.isAbsolute(root) then root = path.resolve path.dirname(require.main.filename), root
       
